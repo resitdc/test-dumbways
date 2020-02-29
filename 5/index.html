@@ -70,7 +70,7 @@
 						<tr>
 							<td style="width: 200px;">Provinsi</td>
 							<td>
-								<select name="id_provinsi" id="option_provinsi" class="resit-input">
+								<select name="id_provinsi" id="option_provinsi" name="id_provinsi" class="resit-input">
 									<option value="">Jawa Barat</option>
 								</select>
 							</td>
@@ -81,18 +81,14 @@
 						</tr>
 						<tr>
 							<td style="width: 200px;">Diresmikan</td>
-							<td><input type="date" class="resit-input" name="nama" placeholder="Isi dengan tanggal Diresmikan"></td>				
-						</tr>
-						<tr>
-							<td style="width: 200px;">Photo</td>
-							<td><input type="file" class="resit-input" name="nama" placeholder="Isi dengan Foto"></td>				
+							<td><input type="date" class="resit-input" name="diresmikan" placeholder="Isi dengan tanggal Diresmikan"></td>
 						</tr>
 					</table>
 				</form>
 			</div>
 			<div class="resit-modal-footer" style="text-align: right;">
-				<button type="reset" class="resit-tombol resit-tombol-merah" onclick="tutup_modal()">TUTUP</button>
-				<button type="button" class="resit-tombol resit-tombol-hijau">SIMPAN</button>
+				<button type="reset" class="resit-tombol resit-tombol-merah" onclick="tutup_modal();">TUTUP</button>
+				<button type="button" class="resit-tombol resit-tombol-hijau" onclick="simpan_kabupaten();">SIMPAN</button>
 			</div>
 		</form>
 	</div>
