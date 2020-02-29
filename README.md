@@ -29,7 +29,7 @@ Anda hanya perlu membuka file detail.html dan index.html, lalu cari kode
 	</script>
 ```
 
-jika sudah ketemu, anda tinggal mengubah value pada variabel master_url ke url backend pada laptop anda
+jika sudah ketemu, anda tinggal mengubah `value` pada variabel `master_url` dengan url backend pada laptop anda
 
 
 ## URL BackEnd hanya ada 2
