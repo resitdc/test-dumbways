@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Belajar JS Murni</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<style type="text/css">
+		.nama-provinsi{
+			font-weight: bold;
+			font-size: 19px;
+		}
+		.box{
+			width: 33%;text-align: center;
+		}
+		.box-provinsi{
+			margin:5px;padding: 17px 10px;border: 1px solid #000;
+		}
+		.mt-1{
+			margin-top: 10px;
+		}
+	</style>
+</head>
+<body>
+<div id="modal-provinsi" class="resit-modal resit-modal-md resit-bg-white resit-radius-1" style="display: none;">
+	<form method="POST" action="" id="form_data">
+		<div class="resit-modal-header">
+			Tambah Data Provinsi
+		</div>
+		<div class="resit-modal-body" style="background-color: #f4f4f4;">
+			<form action="POST">
+				<input type="hidden" name="id" readonly>
+				<table>
+					<tr>
+						<td style="width: 200px;">Nama Provinsi</td>
+						<td><input type="text" class="resit-input" name="provinsi_nama" maxlength="150" placeholder="Isi dengan nama Provinsi"></td>				
+					</tr>
+					<tr>
+						<td style="width: 200px;">Diresmikan</td>
+						<td><input type="date" class="resit-input" name="provinsi_diresmikan" placeholder="Isi dengan tanggal Diresmikan"></td>				
+					</tr>
+					<tr>
+						<td style="width: 200px;">Photo</td>
+						<td><input type="file" class="resit-input" name="provinsi_photo" placeholder="Isi dengan Foto"></td>				
+					</tr>
+					<tr>
+						<td style="width: 200px;">Pulau</td>
+						<td><input type="text" class="resit-input" name="provinsi_pulau" maxlength="150" placeholder="Isi dengan nama Pulau"></td>				
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="resit-modal-footer" style="text-align: right;">
+			<button type="reset" class="resit-tombol resit-tombol-merah" onclick="tutup_modal()">TUTUP</button>
+			<button type="button" class="resit-tombol resit-tombol-hijau" onclick="simpan_provinsi()">SIMPAN</button>
+		</div>
+	</form>
+</div>
+<div id="modal-kabupaten" class="resit-modal resit-modal-md resit-bg-white resit-radius-1" style="display: none;">
+	<form method="POST" action="">
+		<div class="resit-modal-header">
+			Tambah Data Kabupaten
+		</div>
+		<div class="resit-modal-body" style="background-color: #f4f4f4;">
+			<form action="POST">
+				<input type="hidden" name="id" readonly>
+				<table>
+					<tr>
+						<td style="width: 200px;">Provinsi</td>
+						<td>
+							<select name="id_provinsi" class="resit-input">
+								<option value="">Jawa Barat</option>
+							</select>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 200px;">Nama Kabupaten</td>
+						<td><input type="text" class="resit-input" name="nama" maxlength="150" placeholder="Isi dengan nama Kabupaten"></td>
+					</tr>
+					<tr>
+						<td style="width: 200px;">Diresmikan</td>
+						<td><input type="date" class="resit-input" name="nama" placeholder="Isi dengan tanggal Diresmikan"></td>				
+					</tr>
+					<tr>
+						<td style="width: 200px;">Photo</td>
+						<td><input type="file" class="resit-input" name="nama" placeholder="Isi dengan Foto"></td>				
+					</tr>
+				</table>
+			</form>
+		</div>
+		<div class="resit-modal-footer" style="text-align: right;">
+			<button type="button" class="resit-tombol resit-tombol-merah" onclick="tutup_modal()">TUTUP</button>
+			<button type="button" class="resit-tombol resit-tombol-hijau">SIMPAN</button>
+		</div>
+	</form>
+</div>
+	<div class="w-8" style="background-color: #FFF;left: 0;right: 0;top: 0;margin-left: auto;margin-right: auto;margin-top:60px;padding: 5px 25px 25px 25px;border-radius: 8px;display: flex;flex-wrap:wrap;">
+		<h1 class="w-5" style="text-align: left;">Provinsi & Kabupaten</h1>
+		<h1 class="w-5" style="text-align: right;">
+			<button type="button" class="resit-tombol resit-tombol-biru" onclick="buka_modal_provinsi()">Add Provinsi</button>
+			<button type="button" class="resit-tombol resit-tombol-biru" onclick="buka_modal_kabupaten()">Add Kabupaten</button>
+		</h1>
+		<div id="data_provinsi" style="display: flex;flex-wrap:wrap;width: 100%;">
+		</div>
+		<div class="w-full">
+			<table class="w-full resit-table" style="border-collapse: collapse;display: none;">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Nama</th>
+						<th>Alamat</th>
+						<th>Aksi</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td style="text-align: center;">1</td>
+						<td>Restu Dwi Cahyo</td>
+						<td>JL. Sadang Serang RT 04 RW 15</td>
+						<td>
+							<button type="button" class="resit-tombol resit-tombol-biru" onclick="buka_modal()">Edit</button>
+							<button type="button" class="resit-tombol resit-tombol-merah" onclick="kampret()">Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<div id="resit_background_modal_show" onclick="tutup_modal();"></div>
+	<script type="text/javascript">
+		const lokasi_foto_kabupaten 	= 'asdas';
+		const lokasi_foto_provinsi 		= 'sadas';
+		window.addEventListener('load', function () {
+			tampilkan_provinsi();
+		}, false);
+
+		function tutup_modal(){
+			var modal 							= document.getElementsByClassName("resit-modal");
+			var modal_background 				= document.getElementById('resit_background_modal_show');
+			for (var i = 0; i < modal.length; i++){
+				modal[i].style.display 			= 'none';
+			}
+			modal_background.style.display 		= "none";
+		}
+		function buka_modal_provinsi(){
+			var modal = document.getElementById("modal-provinsi");
+			var modal_background = document.getElementById('resit_background_modal_show');
+			modal.style.display = 'block';
+			modal_background.style.display = "block";
+		}
+		function buka_modal_kabupaten(){
+			var modal = document.getElementById("modal-kabupaten");
+			var modal_background = document.getElementById('resit_background_modal_show');
+			modal.style.display = 'block';
+			modal_background.style.display = "block";
+		}
+		function tampilkan_provinsi(){
+			var url 				= 'http://127.0.0.1/test-dumbways/5/api/provinsi';
+			kirim_data('POST',url)
+			.then((res) => {
+				console.log(res);
+				if(res.status == 1){
+					var hasil_akhir = '';
+					for(var a = 0;a < res.data.length; a++){
+						var html = `<div class="box">
+										<div class="box-provinsi">
+											<img src="kampret" align="LOGO" style="width: 80%;height: 80%;">
+											<div class="nama-provinsi">${res.data[a].nama}</div>
+											<div>${res.data[a].diresmikan}</div>
+											<a href="detail.html?id=${res.data[a].id}" class="resit-tombol resit-tombol-biru mt-1" >Detail</a>
+										</div>
+									</div>`;
+						hasil_akhir 	= hasil_akhir+html;
+					}
+					document.getElementById('data_provinsi').innerHTML = hasil_akhir;
+				}else{
+					alert(res.pesan);
+				}
+			})
+			.catch((error) => {
+				alert('Terjaid kesalahan, silahkan periksa Consol anda');
+				console.error('Error:', error);
+			});
+		}
+		function simpan_provinsi(){
+			var url 				= 'http://127.0.0.1/test-dumbways/5/api/provinsi/save';
+			var form_data 			= new FormData();
+			var val_nama 			= document.getElementsByName("provinsi_nama")[0].value;
+			var val_diresmikan 		= document.getElementsByName("provinsi_diresmikan")[0].value;
+			var val_photo 			= document.getElementsByName("provinsi_photo")[0].files[0];
+			var val_pulau 			= document.getElementsByName("provinsi_pulau")[0].value;
+
+			form_data.append("nama", val_nama);
+			form_data.append("diresmikan", val_diresmikan);
+			form_data.append("photo", val_photo);
+			form_data.append("pulau", val_pulau);
+
+			kirim_data('POST',url, form_data)
+			.then((data) => {
+				console.log(data);
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+		}
+		function kirim_data(method_type, url, data) {
+			return fetch(url, {
+				method: method_type,
+				body: new URLSearchParams(data),
+				headers: new Headers({
+					'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8'
+				})
+			})
+			.then(response => response.json())
+		}
+	</script>
+</body>
+</html>

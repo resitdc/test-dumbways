@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Detail Data</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function get_url() {
+			var vars = {};
+			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
+				vars[key] = value;
+			});
+			return vars;
+		}
+		console.log(get_url()["id"]);
+	</script>
+</body>
+</html>

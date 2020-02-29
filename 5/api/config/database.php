@@ -4,7 +4,7 @@
  * Database With Mysql
  * Created by Restu Dwi Cahyo
  */
-class database{
+class Database{
     public function __construct(){
     	$host 			= 'localhost';
     	$username 		= 'root';

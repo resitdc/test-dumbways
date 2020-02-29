@@ -4,13 +4,13 @@
  * Database With Mysql
  * Created by Restu Dwi Cahyo
  */
-require_once './models/provinsi.php';
+require_once './models/kabupaten.php';
 require_once './helper.php';
 
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
-$provinsi 		= new Provinsi();
-$file_name 		= 'provinsi';
+$kabupaten 		= new Kabupaten();
+$file_name 		= 'kabupaten';
 $uri 			= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']).$file_name.'/';
 $get_uri 		= explode('/',str_replace($uri,'',$_SERVER['REDIRECT_URL']));
 
