@@ -2,15 +2,148 @@
 <html>
 <head>
 	<title>Detail Data</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<script type="text/javascript" src="./pengganti_ajax.js"></script>
+	<style type="text/css">
+		#nama_provinsi:before{
+			content: 'Provinsi ';
+		}
+	</style>
+	<script type="text/javascript">
+		const master_url_provinsi 				= 'http://127.0.0.1/test-dumbways/5/api/provinsi.php';
+		const master_url_kabupaten 				= 'http://127.0.0.1/test-dumbways/5/api/kabupaten.php';
+	</script>
 </head>
 <body>
+	<div id="modal-kabupaten" class="resit-modal resit-modal-md resit-bg-white resit-radius-1" style="display: none;">
+		<form method="POST" action="">
+			<div class="resit-modal-header">
+				Tambah Data Kabupaten
+			</div>
+			<div class="resit-modal-body" style="background-color: #f4f4f4;">
+				<form action="POST">
+					<input type="hidden" name="id_provinsi" readonly>
+					<input type="hidden" name="id_kabupaten" readonly>
+					<table>
+						<tr>
+							<td style="width: 200px;">Nama Kabupaten</td>
+							<td><input type="text" class="resit-input" name="nama" maxlength="150" placeholder="Isi dengan nama Kabupaten"></td>
+						</tr>
+						<tr>
+							<td style="width: 200px;">Diresmikan</td>
+							<td><input type="date" class="resit-input" name="nama" placeholder="Isi dengan tanggal Diresmikan"></td>				
+						</tr>
+						<tr>
+							<td style="width: 200px;">Photo</td>
+							<td><input type="file" class="resit-input" name="nama" placeholder="Isi dengan Foto"></td>				
+						</tr>
+					</table>
+				</form>
+			</div>
+			<div class="resit-modal-footer" style="text-align: right;">
+				<button type="button" class="resit-tombol resit-tombol-merah" onclick="tutup_modal()">TUTUP</button>
+				<button type="button" class="resit-tombol resit-tombol-hijau">SIMPAN</button>
+			</div>
+		</form>
+	</div>
+	<div class="w-8" style="background-color: #FFF;left: 0;right: 0;top: 0;margin-left: auto;margin-right: auto;margin-top:60px;padding: 5px 25px 25px 25px;border-radius: 8px;display: flex;flex-wrap:wrap;">
+		<div class="w-full">
+		<button type="button" class="resit-tombol resit-tombol-biru" style="margin-top: 20px;" onclick="window.history.back();">Kembali</button><br>
+		</div>
+		<h1 class="w-5" style="text-align: left;" id="nama_provinsi"></h1>
+		<h1 class="w-5" style="text-align: right;">
+			<button type="button" class="resit-tombol resit-tombol-biru" onclick="buka_modal_kabupaten()">Add Kabupaten</button>
+		</h1>
+		<div id="data_provinsi" style="display: flex;flex-wrap:wrap;width: 100%;">
+		</div>
+		<div class="w-full">
+			<table class="w-full">
+				<tr>
+					<td rowspan="3" style="width: 40%;text-align: center;">Gambar</td>
+					<td style="width: 15%;">Nama :</td>
+					<td style="font-weight: bold;" id="td_nama"></td>
+				</tr>
+				<tr>
+					<td>Pulau</td>
+					<td style="font-weight: bold;" id="td_pulau"></td>
+				</tr>
+				<tr>
+					<td>Diresmikan</td>
+					<td style="font-weight: bold;" id="td_diresmikan"></td>
+				</tr>
+			</table>
+		</div>
+		<h2 style="margin-top: 50px;">Data Kabupaten</h2>
+		<div class="w-full">
+			<table class="w-full resit-table" style="border-collapse: collapse;">
+				<thead>
+					<tr>
+						<th>No</th>
+						<th>Nama Kabupaten</th>
+						<th>Diresmikan</th>
+						<th>Aksi</th>
+					</tr>
+				</thead>
+				<tbody id="data_kabupaten">
+				</tbody>
+			</table>
+		</div>
+	</div>
 	<script type="text/javascript">
-		function get_url() {
-			var vars = {};
-			var parts = window.location.href.replace(/[?&]+([^=&]+)=([^&]*)/gi, function(m,key,value) {
-				vars[key] = value;
+		window.addEventListener('load', function () {
+			tampilkan_detail_provinsi();
+		}, false);
+		function tampilkan_detail_provinsi(){
+			var id_provinsi 		= get_url()["id"];
+			var url 				= master_url_provinsi+'/detail';
+			get_data(url+'?id='+id_provinsi)
+			.then((res) => {
+				console.log(res);
+				if(res.status == 1){
+					document.getElementById('nama_provinsi').innerHTML = res.data.nama;
+					document.getElementById('td_nama').innerHTML = res.data.nama;
+					document.getElementById('td_diresmikan').innerHTML = res.data.diresmikan;
+					document.getElementById('td_pulau').innerHTML = res.data.pulau;
+					tampilkan_kabupaten(id_provinsi);
+				}else{
+					alert(res.pesan);
+				}
+			})
+			.catch((error) => {
+				alert('Terjaid kesalahan, silahkan periksa Consol anda');
+				console.error('Error:', error);
 			});
-			return vars;
+		}
+		function tampilkan_kabupaten(id_provinsi){
+			document.getElementById('data_kabupaten').innerHTML = '';
+			var url 				= master_url_kabupaten;
+			get_data(url+'?id='+id_provinsi)
+			.then((res) => {
+				console.log(res);
+				if(res.status == 1){
+					var hasil_akhir = '';
+					for(var a = 0;a < res.data.length; a++){
+						var html = `<tr>
+										<td style="text-align: center;">${a+1}</td>
+										<td>${res.data[a].nama}</td>
+										<td>${res.data[a].diresmikan}</td>
+										<td>
+											<button type="button" class="resit-tombol resit-tombol-biru" onclick="edit_kabupaten()">Edit</button>
+											<button type="button" class="resit-tombol resit-tombol-merah" onclick="delete_kabupaten()">Delete</button>
+										</td>
+									</tr>`;
+						hasil_akhir 	= hasil_akhir+html;
+					}
+					document.getElementById('data_kabupaten').innerHTML = hasil_akhir;
+				}else{
+					document.getElementById('data_kabupaten').innerHTML = `<tr><td colspan="4" style="text-align: center;">Tidak ada data</td></tr>`;
+				}
+			})
+			.catch((error) => {
+				document.getElementById('data_kabupaten').innerHTML = `<tr><td colspan="4" style="text-align: center;">Tidak ada data</td></tr>`;
+				alert('Terjaid kesalahan, silahkan periksa Consol anda');
+				console.error('Error:', error);
+			});
 		}
 		console.log(get_url()["id"]);
 	</script>

@@ -6,44 +6,46 @@
  */
 require_once './config/database.php';
 class Kabupaten extends database{
-    public function add_data($nama_provinsi,$diresmikan,$photo,$pulau){
-        $input = $this->db->prepare('INSERT INTO provinsi_tb (nama,diresmikan,photo,pulau) VALUES (?, ?, ?, ?)');
+    public function add_data($nama_kabupaten,$diresmikan,$photo,$provinsi_id){
+        $input = $this->db->prepare('INSERT INTO kabupaten_tb (nama,provinsi_id,diresmikan,photo) VALUES (?, ?, ?, ?)');
         
-        $input->bindParam(1, $nama_provinsi);
+        $input->bindParam(1, $nama_kabupaten);
         $input->bindParam(2, $diresmikan);
         $input->bindParam(3, $photo);
-        $input->bindParam(4, $pulau);
+        $input->bindParam(4, $provinsi_id);
 
         $input->execute();
         return $input->rowCount();
     }
-    public function select_data($limit = 10,$offset = 0){
-        $query = $this->db->prepare('SELECT * FROM provinsi_tb LIMIT '.$limit.' OFFSET'.$offset);
-        $query->execute();
-        $data = $query->fetchAll();
-        return $data;
-    }
-    public function detail_data($id_provinsi){
-        $query = $this->db->prepare("SELECT * FROM provinsi_tb where id=?");
+    public function select_data($id_provinsi){
+        $query = $this->db->prepare('SELECT * FROM kabupaten_tb WHERE provinsi_id=?');
         $query->bindParam(1, $id_provinsi);
         $query->execute();
-        return $query->fetch();
+        $data = $query->fetchAll(PDO::FETCH_OBJ);
+        return $data;
     }
-    public function update($nama_provinsi,$diresmikan,$photo,$pulau){
-        $query = $this->db->prepare('UPDATE provinsi_tb set nama=?,diresmikan=?,photo=? where pulau=?');
+    public function detail_data($id_kabupaten){
+        $query = $this->db->prepare("SELECT * FROM kabupaten_tb WHERE id=?");
+        $query->bindParam(1, $id_kabupaten);
+        $query->execute();
+        return $query->fetch(PDO::FETCH_OBJ);
+    }
+    public function update($id_kabupaten,$id_provinsi,$nama_kabupaten,$diresmikan,$photo,$pulau){
+        $query = $this->db->prepare('UPDATE kabupaten_tb set nama=?,diresmikan=?,photo=?,provinsi_id=? WHERE id=?');
         
-        $input->bindParam(1, $nama_provinsi);
+        $input->bindParam(1, $nama_kabupaten);
         $input->bindParam(2, $diresmikan);
         $input->bindParam(3, $photo);
-        $input->bindParam(4, $pulau);
+        $input->bindParam(4, $id_provinsi);
+        $input->bindParam(5, $id_kabupaten);
 
         $query->execute();
         return $query->rowCount();
     }
-    public function delete($id_provinsi){
-        $query = $this->db->prepare("DELETE FROM provinsi_tb where id=?");
+    public function delete($id_kabupaten){
+        $query = $this->db->prepare("DELETE FROM kabupaten_tb WHERE id=?");
 
-        $query->bindParam(1, $id_provinsi);
+        $query->bindParam(1, $id_kabupaten);
 
         $query->execute();
         return $query->rowCount();

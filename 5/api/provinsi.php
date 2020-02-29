@@ -10,13 +10,12 @@ require_once './helper.php';
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
 $provinsi 		= new Provinsi();
-$file_name 		= 'provinsi';
+$file_name 		= 'provinsi.php';
 $uri 			= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']).$file_name.'/';
-$get_uri 		= explode('/',str_replace($uri,'',$_SERVER['REDIRECT_URL']));
+$get_uri 		= explode('/',str_replace($uri,'',$_SERVER['PHP_SELF']));
 
 $type 			= isset($get_uri[0])?$get_uri[0]:'';
 $id_provinsi 	= isset($_GET['id'])?$_GET['id']:'';
-
 
 switch ($type){
 	case 'detail':
