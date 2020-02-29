@@ -47,7 +47,7 @@ switch ($type){
 		$diresmikan 				= isset($_POST['diresmikan'])?$_POST['diresmikan']:'';
 		$photo 						= isset($_POST['photo'])?$_POST['photo']:''; 
 
-		if($id != null){
+		if($id_kabupaten != null){
 			$eksekusi_query 		= $kabupaten->update($nama,$diresmikan,$photo,$id_provinsi);
 			if ($eksekusi_query != false){
 				$hasil['status'] 	= true;
@@ -56,7 +56,7 @@ switch ($type){
 				$hasil['pesan'] 	= 'Terjadi kesalahan saat update data';
 			}
 		}else{
-			$eksekusi_query 		= $kabupaten->update($id_kabupaten,$id_provinsi,$nama,$diresmikan,$photo);
+			$eksekusi_query 		= $kabupaten->add_data($nama,$diresmikan,$photo,$id_provinsi);
 			if ($eksekusi_query != false){
 				$hasil['status'] 	= true;
 				$hasil['pesan'] 	= 'Data berhasil di buat';

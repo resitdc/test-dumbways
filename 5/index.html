@@ -21,6 +21,7 @@
 	</style>
 	<script type="text/javascript">
 		const master_url 				= 'http://127.0.0.1/test-dumbways/5/api/provinsi.php';
+		const master_url_kabupaten 		= 'http://127.0.0.1/test-dumbways/5/api/kabupaten.php';
 	</script>
 </head>
 <body>
@@ -70,18 +71,17 @@
 						<tr>
 							<td style="width: 200px;">Provinsi</td>
 							<td>
-								<select name="id_provinsi" id="option_provinsi" name="id_provinsi" class="resit-input">
-									<option value="">Jawa Barat</option>
+								<select name="id_provinsi" id="option_provinsi" name="kabupaten_id_provinsi" class="resit-input">
 								</select>
 							</td>
 						</tr>
 						<tr>
 							<td style="width: 200px;">Nama Kabupaten</td>
-							<td><input type="text" class="resit-input" name="nama" maxlength="150" placeholder="Isi dengan nama Kabupaten"></td>
+							<td><input type="text" class="resit-input" name="kabupaten_nama" maxlength="150" placeholder="Isi dengan nama Kabupaten"></td>
 						</tr>
 						<tr>
 							<td style="width: 200px;">Diresmikan</td>
-							<td><input type="date" class="resit-input" name="diresmikan" placeholder="Isi dengan tanggal Diresmikan"></td>
+							<td><input type="date" class="resit-input" name="kabupaten_diresmikan" placeholder="Isi dengan tanggal Diresmikan"></td>
 						</tr>
 					</table>
 				</form>
@@ -185,7 +185,7 @@
 					for(var a = 0;a < res.data.length; a++){
 						var html = `<div class="box">
 						<div class="box-provinsi">
-						<img src="kampret" align="LOGO" style="width: 80%;height: 80%;">
+						<img src="kampret" alt="Gambar Provinsi ${res.data[a].nama}" style="width: 80%;height: 80%;">
 						<div class="nama-provinsi">${res.data[a].nama}</div>
 						<div>${res.data[a].diresmikan}</div>
 						<a href="detail.html?id=${res.data[a].id}" class="resit-tombol resit-tombol-biru mt-1" >Detail</a>
@@ -203,6 +203,31 @@
 				alert('Terjaid kesalahan, silahkan periksa Consol anda');
 				console.error('Error:', error);
 			});
+		}
+		function simpan_kabupaten(){
+			var url 				= master_url_kabupaten+'/save';
+			var form_data 			= new FormData();
+			var val_id_provinsi 	= document.getElementById("option_provinsi").value;
+			var val_nama 			= document.getElementsByName("kabupaten_nama")[0].value;
+			var val_diresmikan 		= document.getElementsByName("kabupaten_diresmikan")[0].value;
+
+			form_data.append("nama", val_nama);
+			form_data.append("diresmikan", val_diresmikan);
+			form_data.append("id_provinsi", val_id_provinsi);
+
+			kirim_data('POST',url, form_data)
+			.then((data) => {
+				console.log(data);
+				if(res.status == 1){
+					alert(res.pesan);
+				}else{
+					alert(res.pesan);
+				}
+			})
+			.catch((error) => {
+				console.error('Error:', error);
+			});
+			tutup_modal();
 		}
 		function simpan_provinsi(){
 			var url 				= master_url+'/save';

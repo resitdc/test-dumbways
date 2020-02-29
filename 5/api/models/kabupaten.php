@@ -7,7 +7,7 @@
 require_once './config/database.php';
 class Kabupaten extends database{
     public function add_data($nama_kabupaten,$diresmikan,$photo,$provinsi_id){
-        $input = $this->db->prepare('INSERT INTO kabupaten_tb (nama,provinsi_id,diresmikan,photo) VALUES (?, ?, ?, ?)');
+        $input = $this->db->prepare('INSERT INTO kabupaten_tb (nama,diresmikan,photo,provinsi_id) VALUES (?, ?, ?, ?)');
         
         $input->bindParam(1, $nama_kabupaten);
         $input->bindParam(2, $diresmikan);

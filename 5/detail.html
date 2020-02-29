@@ -15,51 +15,19 @@
 	</script>
 </head>
 <body>
-	<div id="modal-kabupaten" class="resit-modal resit-modal-md resit-bg-white resit-radius-1" style="display: none;">
-		<form method="POST" action="">
-			<div class="resit-modal-header">
-				Tambah Data Kabupaten
-			</div>
-			<div class="resit-modal-body" style="background-color: #f4f4f4;">
-				<form action="POST">
-					<input type="hidden" name="id_provinsi" readonly>
-					<input type="hidden" name="id_kabupaten" readonly>
-					<table>
-						<tr>
-							<td style="width: 200px;">Nama Kabupaten</td>
-							<td><input type="text" class="resit-input" name="nama" maxlength="150" placeholder="Isi dengan nama Kabupaten"></td>
-						</tr>
-						<tr>
-							<td style="width: 200px;">Diresmikan</td>
-							<td><input type="date" class="resit-input" name="nama" placeholder="Isi dengan tanggal Diresmikan"></td>				
-						</tr>
-						<tr>
-							<td style="width: 200px;">Photo</td>
-							<td><input type="file" class="resit-input" name="nama" placeholder="Isi dengan Foto"></td>				
-						</tr>
-					</table>
-				</form>
-			</div>
-			<div class="resit-modal-footer" style="text-align: right;">
-				<button type="button" class="resit-tombol resit-tombol-merah" onclick="tutup_modal()">TUTUP</button>
-				<button type="button" class="resit-tombol resit-tombol-hijau">SIMPAN</button>
-			</div>
-		</form>
-	</div>
 	<div class="w-8" style="background-color: #FFF;left: 0;right: 0;top: 0;margin-left: auto;margin-right: auto;margin-top:60px;padding: 5px 25px 25px 25px;border-radius: 8px;display: flex;flex-wrap:wrap;">
 		<div class="w-full">
 		<button type="button" class="resit-tombol resit-tombol-biru" style="margin-top: 20px;" onclick="window.history.back();">Kembali</button><br>
 		</div>
-		<h1 class="w-5" style="text-align: left;" id="nama_provinsi"></h1>
-		<h1 class="w-5" style="text-align: right;">
-			<button type="button" class="resit-tombol resit-tombol-biru" onclick="buka_modal_kabupaten()">Add Kabupaten</button>
-		</h1>
+		<h1 class="w-full" style="text-align: left;" id="nama_provinsi"></h1>
 		<div id="data_provinsi" style="display: flex;flex-wrap:wrap;width: 100%;">
 		</div>
 		<div class="w-full">
 			<table class="w-full">
 				<tr>
-					<td rowspan="3" style="width: 40%;text-align: center;">Gambar</td>
+					<td rowspan="3" style="width: 40%;text-align: center;">
+						<img src="" alt="Gambar Provinsi" style="width: 80%;height: 80%;">
+					</td>
 					<td style="width: 15%;">Nama :</td>
 					<td style="font-weight: bold;" id="td_nama"></td>
 				</tr>
