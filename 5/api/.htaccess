@@ -1,0 +1,7 @@
+RewriteEngine On
+RewriteRule ^([a-z]+)\/?$ $1.php [NC]
+
+RewriteCond %{SCRIPT_FILENAME} !-d
+RewriteCond %{SCRIPT_FILENAME} !-f
+ 
+RewriteRule ^.*$ ./provinsi.php
