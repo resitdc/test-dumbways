@@ -1,5 +1,7 @@
 # Test Dumbways
 
+# ⚠️ _PERINGATAN:_ ANDA PERLU MENGGUNAKAN BROWSER YANG SUPPORT JAVASCRIPT
+
 ## Fungsi masing masing File
 
 1. File 2.html
