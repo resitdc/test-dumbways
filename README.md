@@ -40,10 +40,10 @@ URL Backend hanya ada 2, yaitu
     1. /detail?id= `id_provinsi`
     1. /delete?id= `id_provinsi`
     1. /save?id= `id_provinsi`
-1.  `URL ANDA`/api/kabupaten.php
-    1. /detail?id= `id_provinsi`
-    1. /delete?id= `id_provinsi`
-    1. /save?id= `id_provinsi`
+1.  `URL ANDA`/api/kabupaten.php?id=`id_provinsi`
+    1. /detail?id= `id_kabupaten`
+    1. /delete?id= `id_kabupaten`
+    1. /save?id= `id_kabupaten`
 
 Untuk Save dan Update data, itu menggunakan URL yang sama
 Jika anda ingin membuat data baru, anda tidka perlu mengirim data `id`
